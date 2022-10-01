@@ -55,16 +55,16 @@ export type Status = 'pending' | 'open' | 'rejected' | 'passed' | 'executed'
  */
 export type Expiration =
   | {
-      at_height: number
-    }
+    at_height: number
+  }
   | {
-      at_time: Timestamp
-    }
+    at_time: Timestamp
+  }
   | {
-      never: {
-        [k: string]: unknown
-      }
+    never: {
+      [k: string]: unknown
     }
+  }
 
 /**
  * This defines the different ways tallies can happen. Every contract should support a subset of these, ideally all.
@@ -73,27 +73,27 @@ export type Expiration =
  */
 export type ThresholdResponse =
   | {
-      absolute_count: {
-        total_weight: number
-        weight: number
-        [k: string]: unknown
-      }
+    absolute_count: {
+      total_weight: number
+      weight: number
+      [k: string]: unknown
     }
+  }
   | {
-      absolute_percentage: {
-        percentage: Decimal
-        total_weight: number
-        [k: string]: unknown
-      }
+    absolute_percentage: {
+      percentage: Decimal
+      total_weight: number
+      [k: string]: unknown
     }
+  }
   | {
-      threshold_quorum: {
-        quorum: Decimal
-        threshold: Decimal
-        total_weight: number
-        [k: string]: unknown
-      }
+    threshold_quorum: {
+      quorum: Decimal
+      threshold: Decimal
+      total_weight: number
+      [k: string]: unknown
     }
+  }
 
 export interface Coin {
   [k: string]: unknown
@@ -108,18 +108,18 @@ export interface Coin {
  */
 export type BankMsg =
   | {
-      send: {
-        amount: Coin[]
-        to_address: string
-        [k: string]: unknown
-      }
+    send: {
+      amount: Coin[]
+      to_address: string
+      [k: string]: unknown
     }
+  }
   | {
-      burn: {
-        amount: Coin[]
-        [k: string]: unknown
-      }
+    burn: {
+      amount: Coin[]
+      [k: string]: unknown
     }
+  }
 
 /**
  * An empty struct that serves as a placeholder in different places, such as contracts that don't set a custom message.
@@ -132,14 +132,14 @@ export interface Empty {
 
 export type CosmosMsgFor_Empty_1 =
   | {
-      bank: BankMsg
-    }
+    bank: BankMsg
+  }
   | {
-      custom: Empty
-    }
+    custom: Empty
+  }
   | {
-      wasm: WasmMsg
-    }
+    wasm: WasmMsg
+  }
 
 /**
  * The message types of the wasm module.
@@ -148,59 +148,59 @@ export type CosmosMsgFor_Empty_1 =
  */
 export type WasmMsg =
   | {
-      execute: {
-        contract_addr: string
-        /**
-         * msg is the json-encoded ExecuteMsg struct (as raw Binary)
-         */
-        msg: Binary
-        send: Coin[]
-        [k: string]: unknown
-      }
+    execute: {
+      contract_addr: string
+      /**
+       * msg is the json-encoded ExecuteMsg struct (as raw Binary)
+       */
+      msg: Binary
+      send: Coin[]
+      [k: string]: unknown
     }
+  }
   | {
-      instantiate: {
-        admin?: string | null
-        code_id: number
-        /**
-         * A human-readbale label for the contract
-         */
-        label: string
-        /**
-         * msg is the JSON-encoded InstantiateMsg struct (as raw Binary)
-         */
-        msg: Binary
-        send: Coin[]
-        [k: string]: unknown
-      }
+    instantiate: {
+      admin?: string | null
+      code_id: number
+      /**
+       * A human-readbale label for the contract
+       */
+      label: string
+      /**
+       * msg is the JSON-encoded InstantiateMsg struct (as raw Binary)
+       */
+      msg: Binary
+      send: Coin[]
+      [k: string]: unknown
     }
+  }
   | {
-      migrate: {
-        contract_addr: string
-        /**
-         * msg is the json-encoded MigrateMsg struct that will be passed to the new code
-         */
-        msg: Binary
-        /**
-         * the code_id of the new logic to place in the given contract
-         */
-        new_code_id: number
-        [k: string]: unknown
-      }
+    migrate: {
+      contract_addr: string
+      /**
+       * msg is the json-encoded MigrateMsg struct that will be passed to the new code
+       */
+      msg: Binary
+      /**
+       * the code_id of the new logic to place in the given contract
+       */
+      new_code_id: number
+      [k: string]: unknown
     }
+  }
   | {
-      update_admin: {
-        admin: string
-        contract_addr: string
-        [k: string]: unknown
-      }
+    update_admin: {
+      admin: string
+      contract_addr: string
+      [k: string]: unknown
     }
+  }
   | {
-      clear_admin: {
-        contract_addr: string
-        [k: string]: unknown
-      }
+    clear_admin: {
+      contract_addr: string
+      [k: string]: unknown
     }
+  }
 /**
  * Binary is a wrapper around Vec<u8> to add base64 de/serialization with serde. It also adds some helper methods to help encode inline.
  *
@@ -246,7 +246,7 @@ export type Duration =
 export interface InstantiateMsg {
   [k: string]: unknown
   max_voting_period: Duration
-  required_weight: number
+  threshold: number
   voters: Voter[]
 }
 

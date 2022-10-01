@@ -8,7 +8,7 @@ import { InstantiateMsg, Voter } from 'types/cw3'
 import { MsgInstantiateContract, LCDClient } from '@terra-money/terra.js'
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider'
 
-const MULTISIG_CODE_ID = 595;
+const MULTISIG_CODE_ID = 473;
 const MULTISIG_CODE_ID_TESTNET = 15690;
 
 function AddressRow({ idx, readOnly }: { idx: number; readOnly: boolean }) {
@@ -40,8 +40,8 @@ function AddressRow({ idx, readOnly }: { idx: number; readOnly: boolean }) {
 }
 
 function validateNonEmpty(msg: InstantiateMsg) {
-  const { required_weight, max_voting_period, voters } = msg
-  if (isNaN(required_weight) || isNaN(max_voting_period.time)) {
+  const { threshold, max_voting_period, voters } = msg
+  if (isNaN(threshold) || isNaN(max_voting_period.time)) {
     return false
   }
   if (
@@ -95,14 +95,14 @@ const CreateMultisig: NextPage = () => {
       addr: formEl[`address_${index}`]?.value?.trim(),
       weight: parseInt(formEl[`weight_${index}`]?.value?.trim()),
     }))
-    const required_weight = parseInt(formEl.threshold.value?.trim())
+    const threshold = parseInt(formEl.threshold.value?.trim())
     const max_voting_period = {
       time: parseInt(formEl.duration.value?.trim()),
     }
 
     const msg = {
       voters,
-      required_weight,
+      threshold,
       max_voting_period,
     }
     // @ebaker TODO: add more validation
@@ -119,7 +119,8 @@ const CreateMultisig: NextPage = () => {
         ? MULTISIG_CODE_ID_TESTNET
         : MULTISIG_CODE_ID,
       msg,
-      {}
+      undefined,
+      "Multsig"
     )
 
     post({
@@ -231,9 +232,8 @@ const CreateMultisig: NextPage = () => {
           </table>
           {!complete && (
             <button
-              className={`btn btn-primary btn-lg font-semibold hover:text-base-100 text-2xl rounded-full w-full ${
-                loading ? 'loading' : ''
-              }`}
+              className={`btn btn-primary btn-lg font-semibold hover:text-base-100 text-2xl rounded-full w-full ${loading ? 'loading' : ''
+                }`}
               style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
               type="submit"
               disabled={loading}
